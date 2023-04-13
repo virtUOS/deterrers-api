@@ -117,7 +117,6 @@ class Deterrers:
         :type admins: list[str]
         '''
         data = {'ipv4_addr': ipv4,
-                'service_profile': 'Multipurpose',
                 'admin_ids': admins}
         return self.__post('host/', data)
 

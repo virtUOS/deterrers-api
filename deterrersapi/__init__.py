@@ -108,16 +108,29 @@ class Deterrers:
         '''
         return self.__get('host/', ipv4_addr=ipv4)
 
-    def add(self, ipv4: str, admins: list[str]) -> None:
+    def add(self, ipv4: str,
+            admins: list[str],
+            profile: None | str = None,
+            firewall: None | str = None) -> None:
         '''Add a new IP address to DETERRERS.
 
         :param ipv4: IPv4 address
         :type ipv4: str
         :param admins: List of admins for address
         :type admins: list[str]
+        :param profile: Firewall profile to use. Must be None, a valid profile
+                        or an empty string string (default: None)
+        :type profile: None | str
+        :param firewall: Host firewall. Must be None, one of the UI options
+                         or an empty string (default: None)
+        :type firewall: None | str
         '''
         data = {'ipv4_addr': ipv4,
                 'admin_ids': admins}
+        if profile is not None:
+            data['service_profile'] = profile
+        if firewall is not None:
+            data['fw'] = firewall
         return self.__post('host/', data)
 
     def delete(self, ipv4: str) -> None:

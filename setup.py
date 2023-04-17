@@ -10,7 +10,7 @@ def read(filename):
 
 setup(
     name='deterrers-api',
-    version='0.2',
+    version='0.3',
     description='Python API client for DETERRERS',
     url='https://github.com/virtUOS/deterrers-api',
     author='Lars Kiesow',

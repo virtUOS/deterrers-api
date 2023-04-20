@@ -141,21 +141,30 @@ class Deterrers:
         '''
         return self.__delete('host/', {'ipv4_addr': ipv4})
 
-    def update(self, ipv4: str, profile: str, firewall: str) -> None:
+    def update(self, ipv4: str,
+               profile: None | str = None,
+               firewall: None | str = None,
+               admins: None | list[str] = None) -> None:
         '''Update IP address information in DETERRERS.
 
         :param ipv4: IPv4 address to update
         :type ipv4: str
         :param profile: Firewall profile to use.
                         Must be a valid profile or an empty string string.
-        :type profile: str
+        :type profile: str | None
         :param firewall: Host firewall. Must be one of the UI options
                          or an empty string.
-        :type firewall: str
+        :type firewall: str | None
+        :param admins: List of admins for address
+        :type admins: list[str] | None
         '''
-        data = {'ipv4_addr': ipv4,
-                'service_profile': profile,
-                'fw': firewall}
+        data = {'ipv4_addr': ipv4}
+        if profile is not None:
+            data['service_profile'] = profile
+        if firewall is not None:
+            data['fw'] = firewall
+        if admins is not None:
+            data['admin_ids'] = admins
         return self.__patch('host/', data)
 
     def action(self, ipv4: str, action: str) -> None:

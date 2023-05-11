@@ -5,6 +5,9 @@ class Deterrers:
     __base_url = None
     __token = None
 
+    timeout = 30
+    '''Request timeout in seconds'''
+
     def __init__(self, base_url: str, token: str) -> None:
         '''Initialize DETERRERS client.
 
@@ -45,7 +48,8 @@ class Deterrers:
         '''
         response = requests.get(self.__url(path),
                                 headers=self.__header(),
-                                params=params)
+                                params=params,
+                                timeout=self.timeout)
         return response.json() if response.status_code == 200 else None
 
     def __patch(self, path: str, data: dict) -> None:
@@ -58,7 +62,10 @@ class Deterrers:
         :raises RuntimeError: if patch did not succeed
         '''
         url: str = self.__url(path)
-        response = requests.patch(url, headers=self.__header(), json=data)
+        response = requests.patch(url,
+                                  headers=self.__header(),
+                                  json=data,
+                                  timeout=self.timeout)
         if response.status_code not in [200]:
             raise RuntimeError(f'Error updating {data}. Response: {response}')
 
@@ -72,7 +79,10 @@ class Deterrers:
         :raises RuntimeError: if adding data did not succeed
         '''
         url: str = self.__url(path)
-        response = requests.post(url, headers=self.__header(), json=data)
+        response = requests.post(url,
+                                 headers=self.__header(),
+                                 json=data,
+                                 timeout=self.timeout)
         if response.status_code not in [200]:
             raise RuntimeError(f'Error adding {data}. Response: {response}')
 
@@ -86,7 +96,10 @@ class Deterrers:
         :raises RuntimeError: if removal did not succeed
         '''
         url: str = self.__url(path)
-        response = requests.delete(url, headers=self.__header(), json=data)
+        response = requests.delete(url,
+                                   headers=self.__header(),
+                                   json=data,
+                                   timeout=self.timeout)
         if response.status_code not in [200, 404]:
             raise RuntimeError(f'Error deleting {data}. Response: {response}')
 

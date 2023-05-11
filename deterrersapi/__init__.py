@@ -103,7 +103,7 @@ class Deterrers:
         if response.status_code not in [200, 404]:
             raise RuntimeError(f'Error deleting {data}. Response: {response}')
 
-    def hosts(self):
+    def hosts(self) -> dict:
         '''Get list of hosts added to DETERRERS
 
         :return: List of hosts
@@ -171,7 +171,7 @@ class Deterrers:
         :param admins: List of admins for address
         :type admins: list[str] | None
         '''
-        data = {'ipv4_addr': ipv4}
+        data: dict[str, str | list[str]] = {'ipv4_addr': ipv4}
         if profile is not None:
             data['service_profile'] = profile
         if firewall is not None:

@@ -18,10 +18,13 @@ jobs:
     - name: install Python dependencies
       run: |
         pip install -r requirements.txt
-        pip install bandit flake8
+        pip install bandit flake8 pyright
 
     - name: run flake8
       run: flake8
 
     - name: run bandit
       run: bandit -r deterrersapi
+
+    - name: run pyright
+      run: pyright --skipunannotated deterrersapi

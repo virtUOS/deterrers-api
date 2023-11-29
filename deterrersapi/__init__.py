@@ -180,14 +180,17 @@ class Deterrers:
             data['admin_ids'] = admins
         return self.__patch('host/', data)
 
-    def action(self, ipv4: str, action: str) -> None:
+    def action(self, ipv4: str, action: str, skip_scan: bool = False) -> None:
         '''Activate firewall profile or block IP address in perimeter firewall.
 
         :param ipv4: IPv4 address to update
         :type ipv4: str
         :param action: Action to take. Can be 'register' or 'block'
         :type action: str
+        :param skip_scan: Whether to skip the initial security scan
+        :type skip_scan: bool
         '''
         data = {'ipv4_addrs': [ipv4],
-                'action': action}
+                'action': action,
+                'skip_scan': skip_scan}
         return self.__post('action/', data)
